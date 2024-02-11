@@ -1,7 +1,6 @@
 package src.writer.integer;
 
 import src.writer.Writer;
-import src.writer.integer.IntegerWriter;
 
 import java.io.IOException;
 

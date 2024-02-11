@@ -3,13 +3,13 @@ package src;
 import src.enums.DataType;
 import src.filter.FileFilter;
 import src.writer.StatisticsWriter;
+import src.writer.Writer;
 import src.writer.floater.FloatWriter;
 import src.writer.floater.StatisticsFloatWriter;
 import src.writer.integer.IntegerWriter;
 import src.writer.integer.StatisticsIntegerWriter;
 import src.writer.string.StatisticsStringWriter;
 import src.writer.string.StringWriter;
-import src.writer.Writer;
 
 import java.io.FileReader;
 import java.io.IOException;

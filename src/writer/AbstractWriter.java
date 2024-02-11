@@ -2,12 +2,7 @@ package src.writer;
 
 import src.Application;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
-import java.io.Closeable;
-import java.io.DataOutputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
