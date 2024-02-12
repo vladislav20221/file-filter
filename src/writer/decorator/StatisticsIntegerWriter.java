@@ -3,12 +3,11 @@ package src.writer.decorator;
 import src.writer.Writer;
 
 import java.io.IOException;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class StatisticsIntegerWriter extends WriterDecorator {
-    private final AtomicInteger max = new AtomicInteger(Integer.MIN_VALUE);
-    private final AtomicInteger min = new AtomicInteger(Integer.MAX_VALUE);
-    private final AtomicInteger sum = new AtomicInteger(0);
+    private int max = Integer.MIN_VALUE;
+    private int min = Integer.MAX_VALUE;
+    private int sum = 0;
 
     public StatisticsIntegerWriter(final Writer writer) {
         super(writer);
@@ -17,36 +16,36 @@ public class StatisticsIntegerWriter extends WriterDecorator {
     @Override
     public void write(String line) throws IOException {
         final int value = Integer.parseInt(line);
-        sum.addAndGet(value);
-        max.set(Integer.max(max.get(), value));
-        min.set(Integer.min(min.get(), value));
+        sum += value;
+        max = Integer.max(max, value);
+        min = Integer.min(min, value);
         super.writer.write(line);
     }
 
     @Override
     public void close() throws IOException {
-        System.out.println("Float statistics min: " + getMin() + "\tmax: " + getMax() + "\tsum: " + getSum() + "\taverage: " + average(getMin(), getMax()));
+        System.out.println("Integer statistics: min = " + getMin() + "\tmax = " + getMax() + "\tsum = " + getSum() + "\taverage = " + average());
         super.writer.close();
     }
 
     public int getMin() {
-        return min.get();
+        return min;
     }
 
     public int getMax() {
-        return max.get();
+        return max;
     }
 
     public int getSum() {
-        return sum.get();
+        return sum;
     }
 
     public float average(final int count) {
-        return (float)sum.get()/(float) count;
+        return (float)sum/(float) count;
     }
 
-    public float average(final float min, final float max) {
-        return (min+max)/2F;
+    public float average() {
+        return (float) (min+max)/2F;
     }
 
 }

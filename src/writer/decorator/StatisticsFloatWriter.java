@@ -3,12 +3,11 @@ package src.writer.decorator;
 import src.writer.Writer;
 
 import java.io.IOException;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class StatisticsFloatWriter extends WriterDecorator {
-    private final AtomicInteger max = new AtomicInteger(Integer.MIN_VALUE);
-    private final AtomicInteger min = new AtomicInteger(Integer.MAX_VALUE);
-    private final AtomicInteger sum = new AtomicInteger(0);
+    private float max = Float.MIN_VALUE;
+    private float min = Float.MAX_VALUE;
+    private float sum = 0F;
 
     public StatisticsFloatWriter(final Writer writer) {
         super(writer);
@@ -16,36 +15,36 @@ public class StatisticsFloatWriter extends WriterDecorator {
 
     @Override
     public void write(String line) throws IOException {
-        final int value = Float.floatToIntBits(Float.parseFloat(line));
-        sum.addAndGet(value);
-        max.set(Integer.max(max.get(), value));
-        min.set(Integer.min(min.get(), value));
+        final float value = Float.parseFloat(line);
+        sum += value;
+        max = Float.max(max, value);
+        min = Float.min(min, value);
         super.writer.write(line);
     }
 
     @Override
     public void close() throws IOException {
-        System.out.println("Float statistics min: " + getMin() + "\tmax: " + getMax() + "\tsum: " + getSum() + "\taverage: " + average(getMin(), getMax()));
+        System.out.println("Float statistics: min = " + getMin() + "\tmax = " + getMax() + "\tsum = " + getSum() + "\taverage = " + average());
         super.writer.close();
     }
 
     public float getMin() {
-        return Float.intBitsToFloat(min.get());
+        return min;
     }
 
     public float getMax() {
-        return Float.intBitsToFloat(max.get());
+        return max;
     }
 
     public float getSum() {
-        return Float.intBitsToFloat(sum.get());
+        return sum;
     }
 
     public float average(final int count) {
-        return Float.intBitsToFloat(sum.get())/(float) count;
+        return sum/(float) count;
     }
 
-    public float average(final float min, final float max) {
+    public float average() {
         return (min+max)/2F;
     }
 
