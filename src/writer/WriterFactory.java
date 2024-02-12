@@ -6,9 +6,9 @@ import src.writer.decorator.StatisticsIntegerWriter;
 import src.writer.decorator.StatisticsStringWriter;
 import src.writer.decorator.StatisticsTimeWorkerWriter;
 import src.writer.decorator.StatisticsWriter;
-import src.writer.floater.FloatWriter;
-import src.writer.integer.IntegerWriter;
-import src.writer.string.StringWriter;
+import src.writer.impl.FloatWriter;
+import src.writer.impl.IntegerWriter;
+import src.writer.impl.StringWriter;
 
 public class WriterFactory {
 

@@ -9,22 +9,26 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public abstract class AbstractWriter implements Writer {
-    protected final String baseFileName;
+    protected final String fileName;
 
     private final BufferedWriter data;
 
     public AbstractWriter(final String fileName) {
-        this.baseFileName = fileName;
-
-        final String fileOutPath = Application.properties.getProperty("file-path-out");
         final String filePrefix = Application.properties.getProperty("file-prefix");
+        this.fileName = filePrefix.concat(fileName);
+
+        final Path basePath = Paths.get(Application.properties.getProperty("file-path-out"));
+        if (basePath.toFile().mkdirs()) {
+            System.out.println("Create new directory: " + basePath.getFileName());
+        }
+
         final int bufferSize = Integer.parseInt(Application.properties.getProperty("out-buffer-size"));
         final boolean rewrite = Boolean.parseBoolean(Application.properties.getProperty("file-out-rewrite"));
 
-        final Path path = Paths.get(fileOutPath, filePrefix.concat(baseFileName));
+        final Path file = Paths.get(basePath.toFile().getPath(), this.fileName);
 
         try {
-            final FileWriter out = new FileWriter(path.toFile(), rewrite);
+            final FileWriter out = new FileWriter(file.toFile(), rewrite);
             this.data = new BufferedWriter(out, bufferSize);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -32,7 +36,7 @@ public abstract class AbstractWriter implements Writer {
     }
 
     @Override
-    public void write(String line) throws IOException {
+    public void write(final String line) throws IOException {
         this.data.write(line);
         this.data.newLine();
     }

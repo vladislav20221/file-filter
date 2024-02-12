@@ -26,10 +26,10 @@ public class FileFilter {
                 if (Objects.isNull(line)) {
                     break;
                 }
-                if (line.matches("\\d+")) {
+                if (line.matches(DataType.INTEGER.pattern())) {
                     this.writerMap.putIfAbsent(DataType.INTEGER, WriterFactory.createIntegerWriter());
                     this.writerMap.get(DataType.INTEGER).write(line);
-                } else if (line.matches("\\d+\\.\\d+")) {
+                } else if (line.matches(DataType.FLOAT.pattern())) {
                     this.writerMap.putIfAbsent(DataType.FLOAT, WriterFactory.createFloatWriter());
                     this.writerMap.get(DataType.FLOAT).write(line);
                 } else {
@@ -42,6 +42,7 @@ public class FileFilter {
         } finally {
             this.writerMap.forEach((k, v) -> {
                 try {
+                    System.out.println("Statistics type: " + k);
                     v.close();
                 } catch (IOException e) {
                     throw new RuntimeException(e);

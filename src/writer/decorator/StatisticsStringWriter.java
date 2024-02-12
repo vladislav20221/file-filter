@@ -21,7 +21,7 @@ public class StatisticsStringWriter extends WriterDecorator {
 
     @Override
     public void close() throws IOException {
-        System.out.println("String statistics: min length = " + getMaxLength() + "\tmax length = " + getMinLength() + "\taverage length = " + average());
+        System.out.println("min length = " + getMaxLength() + "\tmax length = " + getMinLength() + "\taverage length = " + average());
         this.writer.close();
     }
 

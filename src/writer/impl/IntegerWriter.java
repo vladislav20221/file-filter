@@ -1,4 +1,4 @@
-package src.writer.integer;
+package src.writer.impl;
 
 import src.Application;
 import src.writer.AbstractWriter;
@@ -12,8 +12,12 @@ public class IntegerWriter extends AbstractWriter {
     }
 
     @Override
+    public void write(String line) throws IOException {
+        super.write(line);
+    }
+
+    @Override
     public void close() throws IOException {
-        System.out.println("Target file: " + super.baseFileName);
         super.close();
     }
 

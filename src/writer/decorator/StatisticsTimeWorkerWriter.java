@@ -5,8 +5,7 @@ import src.writer.Writer;
 import java.io.IOException;
 
 public class StatisticsTimeWorkerWriter extends WriterDecorator {
-    private long start = 0L;
-    private long end = 0L;
+    private final long start;
 
     public StatisticsTimeWorkerWriter(final Writer writer) {
         super(writer);
@@ -20,8 +19,8 @@ public class StatisticsTimeWorkerWriter extends WriterDecorator {
 
     @Override
     public void close() throws IOException {
-        this.end = System.currentTimeMillis();
-        System.out.println("Time work (ms): " + (this.end-this.start));
+        final long end = System.currentTimeMillis();
+        System.out.println("time work (ms): " + (end-this.start));
         this.writer.close();
     }
 

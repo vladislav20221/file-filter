@@ -24,7 +24,7 @@ public class StatisticsIntegerWriter extends WriterDecorator {
 
     @Override
     public void close() throws IOException {
-        System.out.println("Integer statistics: min = " + getMin() + "\tmax = " + getMax() + "\tsum = " + getSum() + "\taverage = " + average());
+        System.out.println("min = " + getMin() + "\tmax = " + getMax() + "\tsum = " + getSum() + "\taverage = " + average());
         super.writer.close();
     }
 
