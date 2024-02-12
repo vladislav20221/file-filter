@@ -1,13 +1,13 @@
-package src.writer.string;
+package src.writer.decorator;
 
 import src.writer.Writer;
 
 import java.io.IOException;
 
-public abstract class StringWriteDecorator implements Writer {
+public abstract class WriterDecorator implements Writer {
     protected final Writer writer;
 
-    public StringWriteDecorator(final StringWriter writer) {
+    public WriterDecorator(Writer writer) {
         this.writer = writer;
     }
 

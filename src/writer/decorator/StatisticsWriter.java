@@ -1,9 +1,11 @@
-package src.writer;
+package src.writer.decorator;
+
+import src.writer.Writer;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class StatisticsWriter extends WriteDecorator {
+public class StatisticsWriter extends WriterDecorator {
     private final AtomicLong count = new AtomicLong(0L);
 
     public StatisticsWriter(final Writer writer) {
@@ -13,12 +15,12 @@ public class StatisticsWriter extends WriteDecorator {
     @Override
     public void write(String line) throws IOException {
         count.incrementAndGet();
-        System.out.println("count: " + count.get());
         super.writer.write(line);
     }
 
     @Override
     public void close() throws IOException {
+        System.out.println("Statistics total write: " + count.get());
         super.writer.close();
     }
 

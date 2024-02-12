@@ -1,13 +1,15 @@
-package src.writer.string;
+package src.writer.decorator;
+
+import src.writer.Writer;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class StatisticsStringWriter extends StringWriteDecorator {
+public class StatisticsStringWriter extends WriterDecorator {
     private final AtomicInteger max = new AtomicInteger(Integer.MIN_VALUE);
     private final AtomicInteger min = new AtomicInteger(Integer.MAX_VALUE);
 
-    public StatisticsStringWriter(final StringWriter writer) {
+    public StatisticsStringWriter(final Writer writer) {
         super(writer);
     }
 
@@ -15,12 +17,12 @@ public class StatisticsStringWriter extends StringWriteDecorator {
     public void write(final String line) throws IOException {
         max.set(Integer.max(max.get(), line.length()));
         min.set(Integer.min(min.get(), line.length()));
-        System.out.println("min: " + getMinLength() + "\tmax: " + getMaxLength());
         this.writer.write(line);
     }
 
     @Override
     public void close() throws IOException {
+        System.out.println("String statistics: min length = " + getMaxLength() + "\tmax length = " + getMinLength());
         this.writer.close();
     }
 

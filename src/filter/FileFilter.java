@@ -4,17 +4,18 @@ import src.enums.DataType;
 import src.reader.FilterFileReader;
 import src.reader.Reader;
 import src.writer.Writer;
+import src.writer.WriterFactory;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
 public class FileFilter {
-    private final Map<DataType, Writer> writerMap;
+    private final Map<DataType, Writer> writerMap = new HashMap<>();
     private final Reader fileReader;
 
-    public FileFilter(final Map<DataType, Writer> writerMap) {
-        this.writerMap = writerMap;
+    public FileFilter() {
         this.fileReader = new FilterFileReader();
     }
     
@@ -25,12 +26,14 @@ public class FileFilter {
                 if (Objects.isNull(line)) {
                     break;
                 }
-                System.out.println("Check: " + line);
                 if (line.matches("\\d+")) {
+                    this.writerMap.putIfAbsent(DataType.INTEGER, WriterFactory.createIntegerWriter());
                     this.writerMap.get(DataType.INTEGER).write(line);
                 } else if (line.matches("\\d+\\.\\d+")) {
+                    this.writerMap.putIfAbsent(DataType.FLOAT, WriterFactory.createFloatWriter());
                     this.writerMap.get(DataType.FLOAT).write(line);
                 } else {
+                    this.writerMap.putIfAbsent(DataType.STRING, WriterFactory.createStringWriter());
                     this.writerMap.get(DataType.STRING).write(line);
                 }
             }
