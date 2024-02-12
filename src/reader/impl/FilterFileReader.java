@@ -1,6 +1,7 @@
-package src.reader;
+package src.reader.impl;
 
 import src.Application;
+import src.reader.AbstractReader;
 
 public class FilterFileReader extends AbstractReader {
 

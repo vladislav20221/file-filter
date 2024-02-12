@@ -1,7 +1,7 @@
 package src.filter;
 
 import src.enums.DataType;
-import src.reader.FilterFileReader;
+import src.reader.impl.FilterFileReader;
 import src.reader.Reader;
 import src.writer.Writer;
 import src.writer.WriterFactory;
