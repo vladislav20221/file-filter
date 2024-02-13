@@ -17,6 +17,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
+/**
+ * Фильтрует входные данные из файлов <source> по фалйам назначнеия <target>.
+ */
 public class FileFilter {
     private final Map<DataType, FilterWriter> writers = new HashMap<>();
     private final List<FilterFileReader> readers;

@@ -4,6 +4,9 @@ import src.writer.FilterWriter;
 
 import java.io.IOException;
 
+/**
+ * Добавляет сбор статистики по данным - string.
+ */
 public class StatisticsStringWriter extends WriterDecorator {
     private int max = Integer.MIN_VALUE;
     private int min = Integer.MAX_VALUE;

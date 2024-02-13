@@ -4,6 +4,9 @@ import src.writer.FilterWriter;
 
 import java.io.IOException;
 
+/**
+ * Добавляет действие вывода подробной информации о файле назначения.
+ */
 public class FileInformationWriter extends WriterDecorator {
 
     public FileInformationWriter(FilterWriter writer) {

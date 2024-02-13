@@ -1,5 +1,8 @@
 package src.enums;
 
+/**
+ * Поддерживаемые типы данных в фильтре.
+ */
 public enum DataType {
     STRING("\\w+"),
     INTEGER("[+-]?\\d+"),

@@ -4,6 +4,9 @@ import src.writer.FilterWriter;
 
 import java.io.IOException;
 
+/**
+ * Добавляет статистику общего время записи данных определённого формата.
+ */
 public class StatisticsTimeWorkerWriter extends WriterDecorator {
     private final long start;
 

@@ -4,6 +4,9 @@ import src.writer.FilterWriter;
 
 import java.io.IOException;
 
+/**
+ * Добавляет сбор статистики по данным - float.
+ */
 public class StatisticsFloatWriter extends WriterDecorator {
     private float max = Float.MIN_VALUE;
     private float min = Float.MAX_VALUE;

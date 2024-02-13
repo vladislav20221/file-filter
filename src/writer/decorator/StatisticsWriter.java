@@ -4,6 +4,9 @@ import src.writer.FilterWriter;
 
 import java.io.IOException;
 
+/**
+ * Добавляет сбор общей короткой статистики.
+ */
 public class StatisticsWriter extends WriterDecorator {
     private Long count = 0L;
 

@@ -10,8 +10,16 @@ import src.writer.impl.FloatWriter;
 import src.writer.impl.IntegerWriter;
 import src.writer.impl.StringWriter;
 
+/**
+ * Абстрактная фабрика для сбстракции FilterWriter
+ */
 public class WriterFactory {
 
+    /**
+     * Создаёт объект для записи в файл назначения для типа данных - int
+     *
+     * @return IntegerWriter
+     */
     public static FilterWriter createIntegerWriter() {
         final boolean isAllStatistics = Boolean.parseBoolean(Application.properties.getProperty("all-statistics"));
         final IntegerWriter writer = new IntegerWriter();
@@ -25,6 +33,11 @@ public class WriterFactory {
         return baseStatistics;
     }
 
+    /**
+     * Создаёт объект для записи в файл назначения для типа данных - string
+     *
+     * @return StringWriter
+     */
     public static FilterWriter createStringWriter() {
         final boolean isAllStatistics = Boolean.parseBoolean(Application.properties.getProperty("all-statistics"));
         final StringWriter writer = new StringWriter();
@@ -38,6 +51,11 @@ public class WriterFactory {
         return baseStatistics;
     }
 
+    /**
+     * Создаёт объект для записи в файл назначения для типа данных - float
+     *
+     * @return FloatWriter
+     */
     public static FilterWriter createFloatWriter() {
         final boolean isAllStatistics = Boolean.parseBoolean(Application.properties.getProperty("all-statistics"));
         final FloatWriter writer = new FloatWriter();
