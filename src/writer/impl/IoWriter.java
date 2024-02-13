@@ -11,6 +11,7 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
 
 public class IoWriter implements FilterWriter {
     private final BufferedWriter data;
@@ -40,9 +41,9 @@ public class IoWriter implements FilterWriter {
     }
 
     @Override
-    public void write(String line) throws IOException {
-        this.data.write(line);
-        this.data.newLine();
+    public void write(final String line) throws IOException {
+        Objects.requireNonNull(line, "Line to IO Writer is null");
+        this.data.write(line.concat("\n"));
     }
 
     @Override

@@ -36,12 +36,13 @@ public class Application {
     }
 
     private static void generator() {
-        final String generateFileName = "source-%d.txt";
+        final String generateFileName = Application.properties.getProperty("generation-file-name-format");
+        final int generateCount = Integer.parseInt(Application.properties.getProperty("generation-count-files"));
         final int max = Integer.parseInt(Application.properties.getProperty("generation-max"))+1;
         final int min = Integer.parseInt(Application.properties.getProperty("generation-min"));
         final int limit = Integer.parseInt(Application.properties.getProperty("generation-size"));
 
-        for (int i = 0; i<4; ++i) {
+        for (int i = 0; i<generateCount; ++i) {
             final Path sourceFile = Paths.get(Application.properties.getProperty("file-path-in"), generateFileName.formatted(i));
             final int bufferSize = Integer.parseInt(Application.properties.getProperty("in-buffer-size"));
             final String encoding = Application.properties.getProperty("encoding-in");

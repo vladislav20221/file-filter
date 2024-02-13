@@ -7,6 +7,7 @@ import src.writer.FilterWriter;
 import src.writer.WriterFactory;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -70,15 +71,22 @@ public class FileFilter {
         }
     }
 
+    // TODO: Рассмосреть другие наиболее оптимальные варианты создание экземпляров FilterWriter.
     private void tryHandleLine(final String line) throws IOException {
         if (line.matches(DataType.INTEGER.pattern())) {
-            this.writers.putIfAbsent(DataType.INTEGER, WriterFactory.createIntegerWriter());
+            if (this.writers.get(DataType.INTEGER) == null) {
+                this.writers.put(DataType.INTEGER, WriterFactory.createIntegerWriter());
+            }
             this.writers.get(DataType.INTEGER).write(line);
         } else if (line.matches(DataType.FLOAT.pattern())) {
-            this.writers.putIfAbsent(DataType.FLOAT, WriterFactory.createFloatWriter());
+            if (this.writers.get(DataType.FLOAT) == null) {
+                this.writers.put(DataType.FLOAT, WriterFactory.createFloatWriter());
+            }
             this.writers.get(DataType.FLOAT).write(line);
         } else {
-            this.writers.putIfAbsent(DataType.STRING, WriterFactory.createStringWriter());
+            if (this.writers.get(DataType.STRING) == null) {
+                this.writers.put(DataType.STRING, WriterFactory.createStringWriter());
+            }
             this.writers.get(DataType.STRING).write(line);
         }
     }
