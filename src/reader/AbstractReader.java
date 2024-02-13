@@ -3,12 +3,15 @@ package src.reader;
 import src.reader.impl.IoReader;
 
 import java.io.IOException;
+import java.nio.file.Path;
 
-public abstract class AbstractReader implements Reader {
-    private final Reader baseReader;
+public abstract class AbstractReader implements FilterReader {
+    private final FilterReader baseReader;
+    protected final Path targetFile;
 
-    public AbstractReader(final String fileName) {
-        this.baseReader = new IoReader(fileName);
+    public AbstractReader(final Path targetFile) {
+        this.targetFile = targetFile;
+        this.baseReader = new IoReader(targetFile);
     }
 
     @Override

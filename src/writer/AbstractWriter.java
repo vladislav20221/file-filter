@@ -4,8 +4,8 @@ import src.writer.impl.IoWriter;
 
 import java.io.IOException;
 
-public abstract class AbstractWriter implements Writer {
-    protected final Writer baseWriter;
+public abstract class AbstractWriter implements FilterWriter {
+    protected final FilterWriter baseWriter;
 
     public AbstractWriter(final String fileName) {
         this.baseWriter = new IoWriter(fileName);

@@ -1,7 +1,7 @@
 package src.writer.impl;
 
 import src.Application;
-import src.writer.Writer;
+import src.writer.FilterWriter;
 
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
@@ -12,7 +12,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class IoWriter implements Writer {
+public class IoWriter implements FilterWriter {
     private final BufferedWriter data;
     private final Path filePath;
 

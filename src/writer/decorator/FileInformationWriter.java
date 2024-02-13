@@ -1,12 +1,12 @@
 package src.writer.decorator;
 
-import src.writer.Writer;
+import src.writer.FilterWriter;
 
 import java.io.IOException;
 
 public class FileInformationWriter extends WriterDecorator {
 
-    public FileInformationWriter(Writer writer) {
+    public FileInformationWriter(FilterWriter writer) {
         super(writer);
     }
 

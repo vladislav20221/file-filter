@@ -1,13 +1,13 @@
 package src.writer.decorator;
 
-import src.writer.Writer;
+import src.writer.FilterWriter;
 
 import java.io.IOException;
 
 public class StatisticsTimeWorkerWriter extends WriterDecorator {
     private final long start;
 
-    public StatisticsTimeWorkerWriter(final Writer writer) {
+    public StatisticsTimeWorkerWriter(final FilterWriter writer) {
         super(writer);
         this.start = System.currentTimeMillis();
     }

@@ -1,12 +1,13 @@
 package src.reader.impl;
 
-import src.Application;
 import src.reader.AbstractReader;
+
+import java.nio.file.Path;
 
 public class FilterFileReader extends AbstractReader {
 
-    public FilterFileReader() {
-        super(Application.properties.getProperty("file-in-source"));
+    public FilterFileReader(final Path targetFile) {
+        super(targetFile);
     }
 
 }

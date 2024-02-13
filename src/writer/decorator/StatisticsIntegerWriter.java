@@ -1,6 +1,6 @@
 package src.writer.decorator;
 
-import src.writer.Writer;
+import src.writer.FilterWriter;
 
 import java.io.IOException;
 
@@ -9,7 +9,7 @@ public class StatisticsIntegerWriter extends WriterDecorator {
     private int min = Integer.MAX_VALUE;
     private int sum = 0;
 
-    public StatisticsIntegerWriter(final Writer writer) {
+    public StatisticsIntegerWriter(final FilterWriter writer) {
         super(writer);
     }
 

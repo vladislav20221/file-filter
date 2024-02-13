@@ -12,7 +12,7 @@ import src.writer.impl.StringWriter;
 
 public class WriterFactory {
 
-    public static Writer createIntegerWriter() {
+    public static FilterWriter createIntegerWriter() {
         final boolean isAllStatistics = Boolean.parseBoolean(Application.properties.getProperty("all-statistics"));
         final IntegerWriter writer = new IntegerWriter();
         final StatisticsTimeWorkerWriter timeStatistics = new StatisticsTimeWorkerWriter(writer);
@@ -25,7 +25,7 @@ public class WriterFactory {
         return baseStatistics;
     }
 
-    public static Writer createStringWriter() {
+    public static FilterWriter createStringWriter() {
         final boolean isAllStatistics = Boolean.parseBoolean(Application.properties.getProperty("all-statistics"));
         final StringWriter writer = new StringWriter();
         final StatisticsTimeWorkerWriter timeStatistics = new StatisticsTimeWorkerWriter(writer);
@@ -38,7 +38,7 @@ public class WriterFactory {
         return baseStatistics;
     }
 
-    public static Writer createFloatWriter() {
+    public static FilterWriter createFloatWriter() {
         final boolean isAllStatistics = Boolean.parseBoolean(Application.properties.getProperty("all-statistics"));
         final FloatWriter writer = new FloatWriter();
         final StatisticsTimeWorkerWriter timeStatistics = new StatisticsTimeWorkerWriter(writer);

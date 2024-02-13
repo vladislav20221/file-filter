@@ -1,13 +1,13 @@
 package src.writer.decorator;
 
-import src.writer.Writer;
+import src.writer.FilterWriter;
 
 import java.io.IOException;
 
 public class StatisticsWriter extends WriterDecorator {
     private Long count = 0L;
 
-    public StatisticsWriter(final Writer writer) {
+    public StatisticsWriter(final FilterWriter writer) {
         super(writer);
     }
 

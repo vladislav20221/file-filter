@@ -36,29 +36,33 @@ public class Application {
     }
 
     private static void generator() {
+        final String generateFileName = "source-%d.txt";
         final int max = Integer.parseInt(Application.properties.getProperty("generation-max"))+1;
         final int min = Integer.parseInt(Application.properties.getProperty("generation-min"));
         final int limit = Integer.parseInt(Application.properties.getProperty("generation-size"));
 
-        final Path sourceFile = Paths.get(Application.properties.getProperty("file-path-in"), Application.properties.getProperty("file-in-source"));
-        final int bufferSize = Integer.parseInt(Application.properties.getProperty("in-buffer-size"));
-        final String encoding = Application.properties.getProperty("encoding-in");
+        for (int i = 0; i<4; ++i) {
+            final Path sourceFile = Paths.get(Application.properties.getProperty("file-path-in"), generateFileName.formatted(i));
+            final int bufferSize = Integer.parseInt(Application.properties.getProperty("in-buffer-size"));
+            final String encoding = Application.properties.getProperty("encoding-in");
 
-        final Random random = new Random();
-        final List<Integer> randomInt = random.ints(min, max)
-                .limit(limit)
-                .boxed().toList();
+            final Random random = new Random();
+            final List<Integer> randomInt =
+                    random.ints(min, max)
+                            .limit(limit)
+                            .boxed().toList();
 
-        try (final OutputStream out = new FileOutputStream(sourceFile.toFile(), false);
-             final OutputStreamWriter outWriter = new OutputStreamWriter(out, Charset.forName(encoding));
-             final BufferedWriter buffer = new BufferedWriter(outWriter, bufferSize)) {
-            for (Integer value : randomInt) {
-                buffer.write(value.toString());
-                buffer.newLine();
+            try (final OutputStream out = new FileOutputStream(sourceFile.toFile(), false);
+                 final OutputStreamWriter outWriter = new OutputStreamWriter(out, Charset.forName(encoding));
+                 final BufferedWriter buffer = new BufferedWriter(outWriter, bufferSize)) {
+                for (Integer value : randomInt) {
+                    buffer.write(value.toString());
+                    buffer.newLine();
+                }
+                buffer.flush();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-            buffer.flush();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 

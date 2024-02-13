@@ -1,7 +1,7 @@
 package src.reader.impl;
 
 import src.Application;
-import src.reader.Reader;
+import src.reader.FilterReader;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -11,21 +11,16 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
-public class IoReader implements Reader {
+public class IoReader implements FilterReader {
     private final BufferedReader data;
-    private final Path filePath;
 
-    public IoReader(final String fileName) {
+    public IoReader(final Path targetFile) {
         final int bufferSize = Integer.parseInt(Application.properties.getProperty("in-buffer-size"));
-        final String filePath = Application.properties.getProperty("file-path-in");
         final String encoding = Application.properties.getProperty("encoding-in");
 
-        this.filePath = Paths.get(filePath, fileName);
-
         try {
-            final InputStream in = new FileInputStream(this.filePath.toFile());
+            final InputStream in = new FileInputStream(targetFile.toFile());
             final InputStreamReader inReader = new InputStreamReader(in, Charset.forName(encoding));
 
             this.data = new BufferedReader(inReader, bufferSize);
