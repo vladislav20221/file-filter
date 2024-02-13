@@ -1,62 +1,70 @@
 package src;
 
-import src.enums.DataType;
 import src.filter.FileFilter;
-import src.writer.StatisticsWriter;
-import src.writer.floater.FloatWriter;
-import src.writer.floater.StatisticsFloatWriter;
-import src.writer.integer.IntegerWriter;
-import src.writer.integer.StatisticsIntegerWriter;
-import src.writer.string.StatisticsStringWriter;
-import src.writer.string.StringWriter;
-import src.writer.Writer;
 
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Map;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.Properties;
+import java.util.Random;
 
 public class Application {
+    private static final Path CONFIG_PATH = Paths.get("config.properties");
     public static final Properties properties = new Properties();
 
     public static void main(String ... args) {
-        try (final FileReader in = new FileReader("config.properties")) {
+        tryParseProperties();
+        generator();
+
+        final FileFilter filter = new FileFilter();
+        filter.scanning();
+    }
+
+    private static void tryParseProperties() {
+        try (final FileReader in = new FileReader(CONFIG_PATH.toFile())) {
             properties.load(in);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        final Map<DataType, Writer> writerMap = Map.of(DataType.INTEGER, createIntegerWriter(),
-                                                       DataType.FLOAT, createFloatWriter(),
-                                                       DataType.STRING, createStringWriter());
-
-        final FileFilter filter = new FileFilter(writerMap);
-        filter.scanning();
-
     }
 
-    private static Writer createIntegerWriter() {
-        final IntegerWriter writer = new IntegerWriter();
-        final StatisticsIntegerWriter statistics = new StatisticsIntegerWriter(writer);
-        final StatisticsWriter baseStatistics = new StatisticsWriter(statistics);
+    private static void generator() {
+        final String generateFileName = Application.properties.getProperty("generation-file-name-format");
+        final int generateCount = Integer.parseInt(Application.properties.getProperty("generation-count-files"));
+        final int max = Integer.parseInt(Application.properties.getProperty("generation-max"))+1;
+        final int min = Integer.parseInt(Application.properties.getProperty("generation-min"));
+        final int limit = Integer.parseInt(Application.properties.getProperty("generation-size"));
 
-        return baseStatistics;
-    }
+        for (int i = 0; i<generateCount; ++i) {
+            final Path sourceFile = Paths.get(Application.properties.getProperty("file-path-in"), generateFileName.formatted(i));
+            final int bufferSize = Integer.parseInt(Application.properties.getProperty("in-buffer-size"));
+            final String encoding = Application.properties.getProperty("encoding-in");
 
-    private static Writer createStringWriter() {
-        final StringWriter writer = new StringWriter();
-        final StatisticsStringWriter statistics = new StatisticsStringWriter(writer);
-        final StatisticsWriter baseStatistics = new StatisticsWriter(statistics);
+            final Random random = new Random();
+            final List<Integer> randomInt =
+                    random.ints(min, max)
+                            .limit(limit)
+                            .boxed().toList();
 
-        return baseStatistics;
-    }
-
-    private static Writer createFloatWriter() {
-        final FloatWriter writer = new FloatWriter();
-        final StatisticsFloatWriter statistics = new StatisticsFloatWriter(writer);
-        final StatisticsWriter baseStatistics = new StatisticsWriter(statistics);
-
-        return baseStatistics;
+            try (final OutputStream out = new FileOutputStream(sourceFile.toFile(), false);
+                 final OutputStreamWriter outWriter = new OutputStreamWriter(out, Charset.forName(encoding));
+                 final BufferedWriter buffer = new BufferedWriter(outWriter, bufferSize)) {
+                for (Integer value : randomInt) {
+                    buffer.write(value.toString());
+                    buffer.newLine();
+                }
+                buffer.flush();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
 }
